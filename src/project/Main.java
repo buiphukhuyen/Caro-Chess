@@ -5,8 +5,9 @@
  */
 package project;
 
+import project.music.BackgroundMusicPanel;
 import javax.swing.JFrame;
-import javax.swing.UIManager;
+import project.music.SoundPanel;
 
 /**
  *
@@ -15,9 +16,9 @@ import javax.swing.UIManager;
 public class Main {
     public static JFrame myFrame;
     public static StartPanel myStartPanel = new StartPanel();
-   // public static GamePanel myGamePanel = new GamePanel();
+    public static GamePanel myGamePanel = new GamePanel();
    // public static NetworkPanel myNetworkPanel = new NetworkPanel();
-   // public static ImagePanel twoLanPlayerPanel = new ImagePanel("images/background.png", 0, 0, 800, 400);
+    public static ImagePanel twoLanPlayerPanel = new ImagePanel("scr/project/images/background/player.png", 0, 0, 800, 400);
     public static boolean startGame;
 
     public Main() {
@@ -32,7 +33,7 @@ public class Main {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLocationRelativeTo(null);
         //Nhạc nền
-        MusicPanel myMusicPanel = new MusicPanel();
+        BackgroundMusicPanel myMusicPanel = new BackgroundMusicPanel();
         myFrame.add(myMusicPanel);
 
         //Ấm thanh 
@@ -47,13 +48,7 @@ public class Main {
 
     }
 
-    @SuppressWarnings("empty-statement")
     public static void main(String[] args) {
-
-        try { // sử Jato libary có chức năng thay đổi giao diện game đẹp hơn 
-            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-        } catch (Exception e) {
-        };
         Main myMain = new Main();
     }
 }
