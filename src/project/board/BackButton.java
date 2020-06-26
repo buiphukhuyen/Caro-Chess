@@ -30,18 +30,17 @@ public class BackButton extends JButton {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-
                 if ("GamePanel".equals(presentPanel)) {
                     Main.myFrame.remove(Main.myGamePanel);
                 }
 
                 if ("NetworkPanel".equals(presentPanel) ) {
-                  //  Main.myFrame.remove(Main.myNetworkPanel);
-//                    /* Khi trở về startMenu, nếu là host thì tất cả kết nối của server bị ngắt*/
+                        Main.myFrame.remove(Main.myNetworkPanel);
+                    /* Khi trở về startMenu, nếu là host thì tất cả kết nối của server bị ngắt*/
                    
-                } // end of else -if clause 
+                }
                 if("towLanPlayerPanel".equals(presentPanel)) { 
-                 //   Main.myFrame.remove(Main.twoLanPlayerPanel);
+                    Main.myFrame.remove(Main.twoLanPlayerPanel);
                     try {
                         
                     } catch (Exception ex) {

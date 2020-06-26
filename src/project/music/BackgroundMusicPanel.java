@@ -44,18 +44,10 @@ public class BackgroundMusicPanel extends JPanel {
                     myButton.setIcon(bug1);
                     myButton.setBorderPainted(false);
                     
-                    System.out.println("stopping : " + myMusic.isStopping);
-
                     myMusic.isPlay = true;
                     myMusic.isStopping = false;
-//                    if (myMusic.firstPress == true) {
-//                        myMusic.playMusic(-1);
-//                        myMusic.firstPress = false;
-//                        myMusic.repeatMusic();
-//                    } else {
-                        myMusic.resumeMusic();
-                        myMusic.repeatMusic();
-                   // }
+                    myMusic.resumeMusic();
+                    myMusic.repeatMusic();
 
                 } else {   // ( my.isPlay = true ) 
 

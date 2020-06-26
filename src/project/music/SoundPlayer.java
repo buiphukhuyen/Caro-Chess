@@ -26,13 +26,16 @@ public class SoundPlayer {
             myPlayer = new Player(FIS) ; 
            
             new Thread (
-                () -> {
+                new Thread() {
+                @Override
+                public void run() {
                     try {
                         myPlayer.play();
                     }
-                    catch(Exception e) {
-                        System.out.print("Sound Player Error: " + e);
+                    catch(JavaLayerException e) {
+                        System.out.print("Lỗi âm thanh: " + e);
                     }
+                }
             }).start();    
         }
         catch(FileNotFoundException | JavaLayerException e ) { 

@@ -32,6 +32,7 @@ public class Computer {
     }
 
     public void calculateEvalBoard(int player, int[][] status) {
+        
         int[] DScore = new int[]{0, 1, 9, 81, 729};
         int[] AScore = new int[]{0, 2, 18, 162, 1458};
 
@@ -81,6 +82,7 @@ public class Computer {
                 }
             }
         }
+        
         //Đánh giá theo cột
         for (col = 0; col < width; col++) {
             for (row = 0; row < height - 4; row++) {
@@ -165,7 +167,7 @@ public class Computer {
             }
         }
 
-            //Đánh giá theo đường chéo phụ
+        //Đánh giá theo đường chéo phụ
         for (row = 4; row < width; row++) {
             for (col = 0; col < height - 4; col++) {
                 ePC = 0;
@@ -219,12 +221,10 @@ public class Computer {
 //        System.out.println("--------------------------------- ");
 //    }
 
-    //Ham tim nuoc di cho may
+    //Phương thức tìm nước đi cho máy
     public void FindMove(int[][] status) {
-
-
         calculateEvalBoard(2, status);
-
+        
         Point temp =  myEvalBoard.MaxPos();
        
         optimalX = temp.x;

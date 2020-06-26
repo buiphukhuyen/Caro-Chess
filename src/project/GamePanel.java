@@ -20,7 +20,7 @@ import project.music.SoundPlayer;
 
 public class GamePanel extends JPanel {
 
-    public static int winner;       //Player 1 win -> 1;  Player 2 win -> 2 ; Computer win -> 3; Draw -> 0   
+    public static int winner;       //Player 1 win -> 1;  Player 2 win -> 2 ; Computer win -> 3; Draw -> -1  
     public int height = 16 ;        //Chiều cao bàn cờ (Mặc định là 16 ô)
     public int width  = 16 ;        //Chiều rộng bàn cờ (Mặc định là 16 ô)
     public int numberPlayer;        //Tổng số người chơi
@@ -56,13 +56,12 @@ public class GamePanel extends JPanel {
         myStatus = new StatusBoard(height, width);
         myComputer = new Computer(height, width);
 
-        // add button back to menu 
+        //Thêm Button quay về
         myBackButton = new BackButton("GamePanel");
         add(myBackButton);
 
-        //MainPanel 
-        player = 1;  // Người chơi 1 đi đầu tiên 
-
+        
+        //Background
         backgroundPanel = new ImagePanel("src/project/images/background_player.png", 0, 0, 1200, 700);
 
         //Panel chứa bàn cờ 
@@ -70,18 +69,22 @@ public class GamePanel extends JPanel {
 
         //Tạo các ô cờ 
         ImagePanel[][] mySquare = new ImagePanel[16][16];
-       normalGame();
+        
+        //Hàm xử lý Game
+        normalGame();
        
+        //Vẽ các ô cờ lên Panel bàn cờ
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 16; j++) {
                 myStatus.statusBoard[i][j] = 0;
                 mySquare[i][j] = new ImagePanel("src/project/images/frame_empty.png", i * 40, j * 40, 40, 40);
                 tablePanel.add(mySquare[i][j]);
                 // action of normal game
-           
                 mySquare[i][j].addMouseListener(myAction);
             }
         }
+        
+        
 
         repaint();
 
@@ -111,9 +114,7 @@ public class GamePanel extends JPanel {
                     // System.out.println("index " + row +" " +col +" " +status[row][col] );
 
                     if (myStatus.statusBoard[row][col] == 0) {
-
                         if (player == 1) {
-
                             a.setPicture("src/project/images/frame_x.png");
 
                             myStatus.setStatus(row, col, player);
@@ -149,7 +150,7 @@ public class GamePanel extends JPanel {
                                     col = myComputer.optimalY;
 
                                 } while (myStatus.statusBoard[row][col] != 0);
-
+                                
                                 System.out.println("Com index " + row + " " + col + " " + myStatus.statusBoard[row][col]);
                                 ImagePanel b = new ImagePanel("src/project/images/frame_o.png", col * 40, row * 40, 40, 40);
                                 tablePanel.add(b);
