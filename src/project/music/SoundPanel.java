@@ -24,7 +24,7 @@ public class SoundPanel extends JPanel {
 
     public SoundPanel() {
         setLayout(null);
-        setBounds(1090, 10, 60, 60);
+        setBounds(1040, 10, 60, 60);
 
         Icon bug1 = new ImageIcon("src/project/images/sound_on.jpg");
         soundButton = new JButton(bug1);

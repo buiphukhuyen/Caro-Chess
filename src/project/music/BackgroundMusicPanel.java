@@ -25,7 +25,7 @@ public class BackgroundMusicPanel extends JPanel {
         myMusic = new BackgroundMusicPlayer();
 
         setLayout(null);
-        setBounds(1000, 10, 60, 60);
+        setBounds(960, 10, 60, 60);
 
         Icon bug1 = new ImageIcon("src/project/images/background_music_on.jpg");
 

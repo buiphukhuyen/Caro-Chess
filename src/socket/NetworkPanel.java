@@ -13,8 +13,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import project.GamePanel;
 import project.ImagePanel;
 import project.Main;
 import project.board.BackButton;
@@ -40,7 +38,6 @@ public class NetworkPanel extends Panel {
 
     public SoundPlayer mySoundPlayer = new SoundPlayer();
 
-    
     public NetworkPanel() {
         myServer = new Server();
         new Thread(
@@ -111,9 +108,7 @@ public class NetworkPanel extends Panel {
 
                                     break;
                                 }
-                            } catch (Exception ex) {
-
-                            }
+                            } catch (Exception ex) {}
 
                         }
                     }

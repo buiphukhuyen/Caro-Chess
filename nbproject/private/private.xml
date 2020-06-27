@@ -4,17 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/buiphukhuyen/Caro-Chess/src/socket/Server.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/music/BackgroundMusicPanel.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/music/SoundPlayer.java</file>
             <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/GamePanel.java</file>
             <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/music/SoundPanel.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/board/StatusBoard.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/Main.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/Check.java</file>
+            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/Winner.java</file>
             <file>file:/Users/buiphukhuyen/Caro-Chess/src/socket/Client.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/socket/NetworkPanel.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/music/BackgroundMusicPlayer.java</file>
-            <file>file:/Users/buiphukhuyen/Caro-Chess/src/project/StartPanel.java</file>
         </group>
     </open-files>
 </project-private>

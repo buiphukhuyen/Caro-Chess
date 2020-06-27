@@ -15,6 +15,7 @@ import socket.NetworkPanel;
  * @author buiphukhuyen
  */
 public class Main {
+    
     public static JFrame myFrame;
     public static StartPanel myStartPanel = new StartPanel();
     public static GamePanel myGamePanel = new GamePanel();

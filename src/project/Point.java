@@ -10,6 +10,10 @@ package project;
  * @author buiphukhuyen
  */
 
+/*
+    Lớp lưu toạ độ điểm (nước đi cho máy)
+ */
+
 public class Point {
     public int x ; 
     public int y ; 

@@ -6,79 +6,83 @@
 package project.computer;
 
 import project.Point;
-import project.board.EvalBoard;
 
 /**
  *
  * @author buiphukhuyen
  */
 
+
 public class Computer {
 
     private int height;
     private int width;
-    public int optimalX;
-    public int optimalY;
+    public int optimalX; //Toạ độ x - nước đi tối ưu
+    public int optimalY; //Toạ độ y - nước đi tối ưu
 
 
-    private EvalBoard myEvalBoard;
+    private EvalBoard myEvalBoard; //Điểm trạng thái bàn cờ
 
     public Computer(int height, int width) {
         this.height = height;
         this.width = width;
-
-       
         myEvalBoard = new EvalBoard(height, width);
     }
 
-    public void calculateEvalBoard(int player, int[][] status) {
-        
-        int[] DScore = new int[]{0, 1, 9, 81, 729};
-        int[] AScore = new int[]{0, 2, 18, 162, 1458};
+    //Phương thức tìm nước đi cho máy
+    public void FindMove(int[][] status) {
+        calculateEvalBoard(2, status);      //Đánh giá điểm với người chơi hiện tại là PC
+        Point temp =  myEvalBoard.MaxPos();
+        optimalX = temp.x;
+        optimalY = temp.y;
+    }
+    
+     public void calculateEvalBoard(int player, int[][] status) {
+         
+        int[] DScore = new int[]{0, 1, 9, 81, 729};         //Mảng điểm tấn công
+        int[] AScore = new int[]{0, 2, 18, 162, 1458};      //Mảng điểm phòng ngự
 
         int row, col, ePC, eHuman;
 
-        myEvalBoard.ResetBoard();
+        myEvalBoard.ResetBoard();   //Reset toàn bộ trạng thái bàn cờ
         
         //Đánh giá theo hàng ngang
         for (row = 0; row < height; row++) {
             for (col = 0; col < width - 4; col++) {
                 ePC = 0;
                 eHuman = 0;
+                
                 for (int i = 0; i < 5; i++) {
-                    if (status[row][col + i] == 1) {
+                    if (status[row][col + i] == 1) {    //Nếu quân đó là của Human
                         eHuman++;
                     }
-                    if (status[row][ col + i] == 2) {
+                    if (status[row][ col + i] == 2) {   //Nếu quân đó là của Computer
                         ePC++;
                     }
                 }
 
-                if (eHuman * ePC == 0 && eHuman != ePC) // một trong 2 bằng 0 và không đồng thời bằng 0
+                if (eHuman * ePC == 0 && eHuman != ePC) //Một trong 2 bằng 0 và không đồng thời bằng 0
                 {
                     for (int i = 0; i < 5; i++) {
                         if (status[row][col + i] == 0) // Nếu ô chưa đánh
                         {
-                            if (eHuman == 0) {
-                                if (player == 1) {
-                                    myEvalBoard.EBoard[row][ col + i] += DScore[ePC];
+                            if (eHuman == 0) { //ePC != 0
+                                if (player == 1) { 
+                                    myEvalBoard.EBoard[row][col + i] += DScore[ePC]; //Cộng điểm tấn công
                                 } else {
-                                    myEvalBoard.EBoard[row][ col + i] += AScore[ePC];
+                                    myEvalBoard.EBoard[row][col + i] += AScore[ePC]; //Cộng điểm phòng ngự
                                 }
                             }
-                            else if (ePC == 0) {
+                            else if (ePC == 0) { //eHuman != 0
                                 if (player == 2) {
                                     myEvalBoard.EBoard[row][col + i] += DScore[eHuman];
                                 } else {
                                     myEvalBoard.EBoard[row][col + i] += AScore[eHuman];
                                 }
                             }
-                            if (eHuman == 4 || ePC == 4) {
-                                myEvalBoard.EBoard[row][col + i] *= 2;
-                            }
+                            
                         }
                     }
-
                 }
             }
         }
@@ -99,9 +103,9 @@ public class Computer {
 
                 if (eHuman * ePC == 0 && eHuman != ePC) {
                     for (int i = 0; i < 5; i++) {
-                        if (status[row + i][col] == 0) // cộng điểm cho các ô chưa đánh
+                        if (status[row + i][col] == 0)  //Các ô chưa đánh
                         {
-                            if (eHuman == 0) {
+                            if (eHuman == 0) { 
                                 if (player == 1) {
                                     myEvalBoard.EBoard[row + i][col] += DScore[ePC];
                                 } else {
@@ -115,9 +119,7 @@ public class Computer {
                                     myEvalBoard.EBoard[row + i][col] += AScore[eHuman];
                                 }
                             }
-                            if (eHuman == 4 || ePC == 4) {
-                                myEvalBoard.EBoard[row + i][col] *= 2;
-                            }
+                            
                         }
                     }
 
@@ -157,9 +159,7 @@ public class Computer {
                                     myEvalBoard.EBoard[row + i][col + i] += AScore[eHuman];
                                 }
                             }
-                            if (eHuman == 4 || ePC == 4) {
-                                myEvalBoard.EBoard[row + i][col + i] *= 2;
-                            }
+                            
                         }
                     }
 
@@ -199,37 +199,13 @@ public class Computer {
                                     myEvalBoard.EBoard[row - i][ col + i] += AScore[eHuman];
                                 }
                             }
-                            if (eHuman == 4 || ePC == 4) {
-                                myEvalBoard.EBoard[row - i][col + i] *= 2;
-                            }
+                           
                         }
                     }
 
                 }
             }
         }
-
-    }
-
-//    public void printEvalBoard() {
-//        for (int row = 0; row < height; row++) {
-//            for (int col = 0; col < width; col++) {
-//                System.out.print(myEvalBoard.EBoard[row][col] + " ");
-//            }
-//            System.out.println(" ");
-//        }
-//        System.out.println("--------------------------------- ");
-//    }
-
-    //Phương thức tìm nước đi cho máy
-    public void FindMove(int[][] status) {
-        calculateEvalBoard(2, status);
-        
-        Point temp =  myEvalBoard.MaxPos();
-       
-        optimalX = temp.x;
-        optimalY = temp.y;
-        System.out.println("op: " + temp.x + " " + temp.y);
     }
 }
 

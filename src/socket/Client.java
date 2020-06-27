@@ -36,7 +36,6 @@ public class Client {
     public ImagePanel background = new ImagePanel("src/project/images/background_waiting.png", 0, 0, 1200, 700);
     public ImagePanel waitingPicture = new ImagePanel("src/project/images/waitingO.png", 0, 150, 280, 500);
     public ImagePanel attackPicture = new ImagePanel("src/project/images/attackO.png", 920, 150, 280, 500);
-    public ImagePanel waitingConnectPicture = new ImagePanel("picture/WaitingConnect.png", 500, 350, 300, 225);
     private ImagePanel[][] board = new ImagePanel[16][16];
     private ImagePanel currentSquare;
     public static BackButton myBackButton;
@@ -74,10 +73,6 @@ public class Client {
         background.add(myBackButton);
         background.repaint();
         
-        // thêm vào waitting picture 
-
-        background.add(waitingConnectPicture);
-
         ImagePanel boardPanel  = new ImagePanel("src/project/images/table.png", 280, 20, 643, 643);
 
         boardPanel.setLayout(null);
@@ -94,6 +89,9 @@ public class Client {
 
                     @Override
                     public void mouseClicked(MouseEvent e) {
+                        if (GamePanel.canPlaySound) {
+                            mySoundPlayer.playSound("sounds/click.mp3");
+                        }
 
                         currentSquare = board[k][l];
                         
@@ -118,8 +116,8 @@ public class Client {
     /* phương thức của Client để lắng nghe tin nhắn từ Server.
      *Tin nhắn đầu tiên là "WELCOME" và đồng thời nhận được kí tự đánh dấu.
       *Sử dụng vòng lặp vô hạn để lắng nghe các tin nhắn "VALID_MOVE",
-      "OPPONENT_MOVED", "VICTORY", "DEFEAT", "TIE", "OPPONENT_QUIT hoặc "MESSAGE".
-     *Các tin "VICTORY", "DEFEAT" và "TIE" là các tính hiệu kết thúc game. Khi đó, 
+      "OPPONENT_MOVED", "VICTORY", "DEFEAT", "OPPONENT_QUIT hoặc "MESSAGE".
+     *Các tin "VICTORY", "DEFEAT" là các tính hiệu kết thúc game. Khi đó, 
     chương trình hỏi người chơi có muốn chơi lại hay không. Nếu không thì Server
     gửi tin nhắn "QUIT" để thoát game và "OPPONENT_QUIT" để đối thủ cũng thoát game.       
     */
@@ -140,7 +138,6 @@ public class Client {
                     waitingPicture.setPicture("src/project/images/waitingX.png");
                     attackPicture.setPicture("src/project/images/attackO.png");
                     isStartGame = true;
-                    background.remove(waitingConnectPicture);
                     background.add(waitingPicture);
                 }
             }
@@ -161,7 +158,6 @@ public class Client {
 
                 } else if (response.startsWith("OPPONENT_MOVED")) {
                     //Đối thủ đã đi
-                    
                     background.remove(waitingPicture);
                     background.add(attackPicture);
 
@@ -178,11 +174,11 @@ public class Client {
                 } else if (response.startsWith("VICTORY")) {
                     //Âm thanh 
                     if (GamePanel.canPlaySound) {
-                        mySoundPlayer.playSound("sound/win.mp3");
+                        mySoundPlayer.playSound("sounds/win.mp3");
                     }
                     
                     //Bảng thông báo
-                    Icon myIcon = new ImageIcon(getClass().getResource("picture/winner" + (mark == 'X' ? '1' : '2') + ".gif"));
+                    Icon myIcon = new ImageIcon("src/project/images/winner" + (mark == 'X' ? '1' : '2') + "_resize.gif");
                     JOptionPane.showMessageDialog(null, null, "Chiến thắng!", JOptionPane.INFORMATION_MESSAGE, myIcon);
                     Main.myFrame.repaint();
                     break;
@@ -192,26 +188,21 @@ public class Client {
                 else if (response.startsWith("DEFEAT")) {
                     //Âm thanh 
                     if (GamePanel.canPlaySound) {
-                        mySoundPlayer.playSound("sound/GameOver.mp3");
+                        mySoundPlayer.playSound("sounds/gameover.mp3");
                     }
                     
                     //Bảng thông báo
-                    Icon myIcon = new ImageIcon(getClass().getResource("picture/loser" + (mark == 'X' ? '1' : '2') + ".gif"));
+                    Icon myIcon = new ImageIcon("src/project/images/winner" + (mark == 'X' ? '2' : '1') + "_resize.gif");
                     JOptionPane.showMessageDialog(null, null, "Thua!", JOptionPane.INFORMATION_MESSAGE, myIcon);
 
                     Main.myFrame.repaint();
                     break;
                 } 
-                //Trường hợp hoà
-                else if (response.startsWith("TIE")) {
-                    Main.myFrame.repaint();
-                    break;
-                } 
+                
                 //Trường hợp nhận thông báo
                 else if (response.startsWith("MESSAGE")) {
                     ////Game bắt đầu, người chơi 1 được phép chơi
                     if ("MESSAGE First turn".equals(response)) {
-                        background.remove(waitingConnectPicture);
                         background.add(attackPicture);  
                     } 
                     //Trường hợp đã kết nối toàn bộ
@@ -233,9 +224,6 @@ public class Client {
         }
     }
 
-    /*
-     * The methord: Do you want restart game?
-     */
     public boolean wantsToPlayAgain() {
 
         int response = JOptionPane.showConfirmDialog(null,

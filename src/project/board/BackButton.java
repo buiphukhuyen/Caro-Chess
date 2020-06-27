@@ -22,10 +22,10 @@ public class BackButton extends JButton {
 
     public BackButton(String presnetPanel) {
         this.presentPanel = presnetPanel;
-        Icon myIcon = new ImageIcon("src/project/images/BackButton.png");
+        Icon myIcon = new ImageIcon("src/project/images/BackButton.jpg");
         setIcon(myIcon);
         setBorderPainted(false);
-        setBounds(1100, 80, 60, 60);
+        setBounds(1120, 10, 60, 60);
         addActionListener(new ActionListener() {
 
             @Override

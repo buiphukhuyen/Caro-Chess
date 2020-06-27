@@ -103,55 +103,56 @@ public class GamePanel extends JPanel {
                 if (canPlaySound) {
                     mySound.playSound("sounds/click.mp3");
                 }
-
                 if (Main.startGame == true) {
                     Main.myFrame.repaint();
                     ImagePanel a = (ImagePanel) e.getComponent();
-                    address = tablePanel.getComponentZOrder(a);  // lấy địa chỉ ô ấn vào từ 0 đến (max -1) theo cột dọc 
-                    //System.out.println("adress " + address );
+                   // System.out.println("a= " + a );
+                    address = tablePanel.getComponentZOrder(a);  //Lấy địa chỉ ô ấn vào từ 0 đến (max -1) theo cột dọc 
+                    System.out.println("address " + address );
                     int row = address % 16;
                     int col = address / 16;
-                    // System.out.println("index " + row +" " +col +" " +status[row][col] );
 
                     if (myStatus.statusBoard[row][col] == 0) {
                         if (player == 1) {
+                            
+                            //Vẽ ảnh X
                             a.setPicture("src/project/images/frame_x.png");
-
+                            
+                            //Đánh dấu X đã đánh trong bàn cờ
                             myStatus.setStatus(row, col, player);
                             repaint();
 
-                            System.out.println("index " + row + " " + col + " " + myStatus.statusBoard[row][col]);
-                            // kiem tra 
-                      
+                            System.out.println("Trạng thái X:" + row + " " + col + " " + myStatus.statusBoard[row][col]);
+                            
+                            //Kiểm tra chiến thắng 
                             if (myCheck.checkIt(row, col, myStatus.statusBoard, player) == true) {
                                 Main.startGame = false;
                                 winner = 1;
-                       //         winnerFrame myWinnerFrame = new winnerFrame(1);
+                                Winner myWinnerFrame = new Winner(1);
 
-                                System.out.println(" Player 1  win !");
+                                System.out.println("X thắng!");
                             } else if (myCheck.isDraw(myStatus.statusBoard)) {
                                 Main.startGame = false;
                                 winner = 0;
-                          //      winnerFrame myWinnerFrame = new winnerFrame(0);
+                                Winner myWinnerFrame = new Winner(0);
                                 System.out.println("Draw");
                             }
                             player = 2;
 
-                            if (numberPlayer == 1) { //chế độ mội người chơi 
-
-                                // Computer tính toán và đi
-                                myComputer.calculateEvalBoard(player, myStatus.statusBoard);
-                                // myComputer.printEvalBoard(); 
+                            if (numberPlayer == 1) { //Chế độ mội người chơi (Chơi với máy)
+                                //myComputer.calculateEvalBoard(player, myStatus.statusBoard);
+                                //Computer tính toán và đi
                                 do {
                                     Computer myComputer = new Computer(height, width);
-                                    myComputer.calculateEvalBoard(player, myStatus.statusBoard);
+                                   // myComputer.calculateEvalBoard(player, myStatus.statusBoard);
                                     myComputer.FindMove(myStatus.statusBoard);
                                     row = myComputer.optimalX;
                                     col = myComputer.optimalY;
 
                                 } while (myStatus.statusBoard[row][col] != 0);
                                 
-                                System.out.println("Com index " + row + " " + col + " " + myStatus.statusBoard[row][col]);
+                                System.out.println("Trạng thái máy: " + row + " " + col + " " + myStatus.statusBoard[row][col]);
+                                
                                 ImagePanel b = new ImagePanel("src/project/images/frame_o.png", col * 40, row * 40, 40, 40);
                                 tablePanel.add(b);
                                 repaint();
@@ -159,13 +160,13 @@ public class GamePanel extends JPanel {
                                 if (myCheck.checkIt(row, col, myStatus.statusBoard, player) == true) {
                                     Main.startGame = false;
                                     winner = 3;
-                            //        winnerFrame myWinnerFrame = new winnerFrame(3);
+                                    Winner myWinnerFrame = new Winner(3);
 
-                                    System.out.println("Computer win !");
+                                    System.out.println("Máy thắng!");
                                 } else if (myCheck.isDraw(myStatus.statusBoard)) {
                                     Main.startGame = false;
                                     winner = 0;
-                           //         winnerFrame myWinnerFrame = new winnerFrame(0);
+                                    Winner myWinnerFrame = new Winner(0);
                                     System.out.println("Draw");
                                 }
                                 player = 1;
@@ -176,19 +177,20 @@ public class GamePanel extends JPanel {
                             a.setPicture("src/project/images/frame_o.png");
                             myStatus.setStatus(row, col, player);
                             repaint();
-                            System.out.println("index " + row + " " + col + " " + myStatus.statusBoard[row][col]);
-                            // kiem tra nước đi chiến thắng?
+                            System.out.println("Người chơi O " + row + " " + col + " " + myStatus.statusBoard[row][col]);
+                            
+                            //Kiểm tra nước đi thắng?
                            
                             if (myCheck.checkIt(row, col, myStatus.statusBoard, player) == true) {
                                 Main.startGame = false;
                                 winner = 2;
-                        //        winnerFrame myWinnerFrame = new winnerFrame(2);
-                                System.out.println(" Player 2 win !");
+                                Winner myWinnerFrame = new Winner(2);
+                                System.out.println(" O thắng!");
 
                             } else if (myCheck.isDraw(myStatus.statusBoard)) {
                                 Main.startGame = false;
                                 winner = 0;
-                     //           winnerFrame myWinnerFrame = new winnerFrame(0);
+                                Winner myWinnerFrame = new Winner(0);
                                 System.out.println("Draw");
                             }
                             player = 1;
