@@ -28,11 +28,7 @@ public class Winner extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         ImagePanel  winnerPicture ; 
         
-        if(winner == 0) { //Hoà
-               winnerPicture = new ImagePanel("", 0, 0, 400, 200) ; 
-              
-        }
-        else if(winner == 3) { //Thua máy tính
+        if(winner == 3) { //Thua máy tính
                winnerPicture = new ImagePanel("src/project/images/winner2_resize.gif", 0, 0, 400, 612) ; 
         } 
         else { //Thắng
@@ -57,7 +53,7 @@ public class Winner extends JFrame{
                 Main.myFrame.remove(Main.myGamePanel);
                 Main.myFrame.add(Main.myStartPanel) ; 
                 Main.myFrame.repaint();
-                 Main.startGame = true ; 
+                Main.startGame = true ; 
                 dispose(); 
             
                  

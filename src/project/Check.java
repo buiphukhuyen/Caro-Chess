@@ -19,19 +19,22 @@ public class Check {
         this.width = width;
     }
 
-    public boolean isDraw(int[][] status) {
-        
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-               
-                if (status[row][col] == 0) {
-                    return false;
-                }
-            }
+    public boolean checkIt(int row, int col, int[][] status, int player) {
+        if (rowCheck(row, col, status, player)) {
+            return true;
         }
-        return true;
+        if (columnCheck(row, col, status, player)) {
+            return true;
+        }
+        if (leftCheck(row, col, status, player)) {
+            return true;
+        }
+        if (rightCheck(row, col, status, player)) {
+            return true;
+        }
+        return false;
     }
-
+    
     public boolean rowCheck(int row, int col, int[][] status, int player) {
 
         int count = 0;
@@ -102,7 +105,6 @@ public class Check {
                 row++;
 
             }
-
             while (col <= 31 && row >= 0) {
                 if (status[row][col] == player) {
                     count++;
@@ -116,25 +118,9 @@ public class Check {
                 row--;
             }
 
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
         return false;
     }
 
-    public boolean checkIt(int row, int col, int[][] status, int player) {
-        if (rowCheck(row, col, status, player)) {
-            return true;
-        }
-
-        if (columnCheck(row, col, status, player)) {
-            return true;
-        }
-        if (leftCheck(row, col, status, player)) {
-            return true;
-        }
-        if (rightCheck(row, col, status, player)) {
-            return true;
-        }
-        return false;
-    }
+    
 }

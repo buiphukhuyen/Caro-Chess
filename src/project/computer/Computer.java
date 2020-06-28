@@ -39,8 +39,8 @@ public class Computer {
     
      public void calculateEvalBoard(int player, int[][] status) {
          
-        int[] DScore = new int[]{0, 1, 9, 81, 729};         //Mảng điểm tấn công
-        int[] AScore = new int[]{0, 2, 18, 162, 1458};      //Mảng điểm phòng ngự
+        int[] DScore = new int[]{0, 1, 9, 81, 729};         //Mảng điểm phòng ngự
+        int[] AScore = new int[]{0, 2, 18, 162, 1458};      //Mảng điểm tấn công
 
         int row, col, ePC, eHuman;
 
@@ -68,9 +68,9 @@ public class Computer {
                         {
                             if (eHuman == 0) { //ePC != 0
                                 if (player == 1) { 
-                                    myEvalBoard.EBoard[row][col + i] += DScore[ePC]; //Cộng điểm tấn công
+                                    myEvalBoard.EBoard[row][col + i] += DScore[ePC]; //Cộng điểm phòng ngự
                                 } else {
-                                    myEvalBoard.EBoard[row][col + i] += AScore[ePC]; //Cộng điểm phòng ngự
+                                    myEvalBoard.EBoard[row][col + i] += AScore[ePC]; //Cộng điểm tấn công
                                 }
                             }
                             else if (ePC == 0) { //eHuman != 0

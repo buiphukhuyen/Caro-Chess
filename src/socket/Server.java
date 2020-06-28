@@ -48,6 +48,7 @@ public class Server extends Thread {
                 System.out.println("Caro Server is Running");
                 while (true) {
                     Game game = new Game();
+                    
                     Game.Player playerX = game.new Player(listener.accept(), 'X');
                     Game.Player playerO = game.new Player(listener.accept(), 'O');                                              
                     playerX.setOpponent(playerO);
@@ -57,9 +58,8 @@ public class Server extends Thread {
                     playerO.start();
                 }
             } 
-            catch (Exception ex) {
-                System.out.println("Bỏ qua lỗi : tồn tại server ");
-            } finally {
+            catch (Exception ex) {} 
+            finally {
                 try {
                     listener.close();
 
@@ -93,7 +93,7 @@ public class Server extends Thread {
 
         /*
          * Kiểm tra người chơi  hiện tại có chiến thắng hay không? 
-         */
+        */
         public boolean hasWinner(int row, int col) {
 
             Check myCheck = new Check(16, 16);
@@ -128,9 +128,8 @@ public class Server extends Thread {
         hiện một nước đi. 
         Phương thức này kiểm tra xem nước đi có hợp lệ không. Nước đi hợp lệ 
         phải là ô còn trống và người chơi đến lượt đi của mình. Nếu hợp lệ, ô cờ 
-        sẽ cặp nhật lại và chuyển lượt chơi ( currentPlayer = opponent)
+        sẽ cặp nhật lại và chuyển lượt chơi (currentPlayer = opponent)
         */
-        
         public synchronized boolean legalMove(int location, Player player) {
             System.out.println("location " + location);
             int row = location / 16;
@@ -145,6 +144,8 @@ public class Server extends Thread {
             return false;
 
         }
+        
+        
         /* 
         Mỗi người chơi sẽ là một Thread. Mỗi người chơi sẽ có kí tự đánh dấu 
         là 'X' hoặc 'O'. Để giao tiếp được, mỗi Player có socket với input 
@@ -174,37 +175,10 @@ public class Server extends Thread {
                     System.out.println("sent: " + "WELCOME " + mark);
                     output.println("WELCOME " + mark);
                     output.println("MESSAGE Wait another connects");
-                   
-                    
-                } catch (IOException e) {
-                    System.out.println("Player died: " + e);
-                }
+                } catch (IOException e) {  }
             }
 
-            /*
-             * Phương thức thiết lập đối thủ cho một Player
-             */
-            public void setOpponent(Player opponent) {
-                this.opponent = opponent;
-            }
-
-            /*
-             * Xử lí tin nhắn : otherPlayerMoved .
-             */
-            public void otherPlayerMoved(int location) {
-                System.out.println("sent: OPPONENT_MOVED " + location);
-                output.println("OPPONENT_MOVED " + location);
-
-                System.out.println(
-                        hasWinner(location / 16, location % 16) ? "DEFEAT" : boardFilledUp() ? "TIE" : "");
-                output.println(
-                        hasWinner(location / 16, location % 16) ? "DEFEAT" : boardFilledUp() ? "TIE" : "");
-
-            }
-
-            /*
-             phương thức run của thread.
-             */
+            
             public void run() {
                 try {
                     // The thread bắt đầu khi cả hai người chơi đã kết nối
@@ -217,33 +191,51 @@ public class Server extends Thread {
                         output.println("MESSAGE First turn");
                     }
                     
-                    // Serve: Nhận các yêu cầu(commands) từ client và xử lí chúng
+                    // Serve: Nhận các yêu cầu (commands) từ client và xử lí chúng
                     while (true) {
                         String command = input.readLine();
                         if (command.startsWith("MOVE")  ) {
                             int location = Integer.parseInt(command.substring(5));
                             if (legalMove(location, this)) {
                                 output.println("VALID_MOVE");
-                                output.println(hasWinner(location / 16, location % 16) ? "VICTORY"
-                                        : boardFilledUp() ? "TIE"
-                                        : "");
+                                output.println(hasWinner(location / 16, location % 16) ? "VICTORY" : "");
                             } else {
                                 output.println("MESSAGE This is not your turn");
                             }
                         } else if (command.startsWith("QUIT")) {
-           
                             return;
                         }
                     }
-                } catch (IOException e) {
-                    System.out.println("Player died: " + e);
-                } finally {
+                } catch (IOException e) {} 
+                finally {
                     try {
                         socket.close();
                     } catch (IOException e) {
                     }
                 }
             }
+            
+            /*
+             * Phương thức thiết lập đối thủ cho một Player
+             */
+            public void setOpponent(Player opponent) {
+                this.opponent = opponent;
+            }
+
+            /*
+             * Xử lí tin nhắn : otherPlayerMoved .
+             */
+            public void otherPlayerMoved(int location) {
+                output.println("OPPONENT_MOVED " + location);
+                System.out.println(
+                        hasWinner(location / 16, location % 16) ? "DEFEAT" : "");
+                output.println(
+                        hasWinner(location / 16, location % 16) ? "DEFEAT" : "");
+
+            }
+
+            
+            
         }
 
     }    

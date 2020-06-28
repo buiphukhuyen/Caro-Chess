@@ -20,7 +20,7 @@ import project.music.SoundPlayer;
 
 public class GamePanel extends JPanel {
 
-    public static int winner;       //Player 1 win -> 1;  Player 2 win -> 2 ; Computer win -> 3; Draw -> -1  
+    public static int winner;       //Player 1 win -> 1;  Player 2 win -> 2 ; Computer win -> 3 
     public int height = 16 ;        //Chiều cao bàn cờ (Mặc định là 16 ô)
     public int width  = 16 ;        //Chiều rộng bàn cờ (Mặc định là 16 ô)
     public int numberPlayer;        //Tổng số người chơi
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel {
     public int address;             //Địa chỉ ô được click chuột
   
     public SoundPlayer mySound = new SoundPlayer(); // đối tượng chơi âm thanh 
-    public static boolean canPlaySound = true; // biến điều kiện xem có thể chơi âm thanh
+    public static boolean canPlaySound = true; //Biến điều kiện xem có thể chơi âm thanh
     
      
     public static ImagePanel backgroundPanel; // JPanel chính 
@@ -84,8 +84,6 @@ public class GamePanel extends JPanel {
             }
         }
         
-        
-
         repaint();
 
         //
@@ -114,7 +112,6 @@ public class GamePanel extends JPanel {
 
                     if (myStatus.statusBoard[row][col] == 0) {
                         if (player == 1) {
-                            
                             //Vẽ ảnh X
                             a.setPicture("src/project/images/frame_x.png");
                             
@@ -131,12 +128,8 @@ public class GamePanel extends JPanel {
                                 Winner myWinnerFrame = new Winner(1);
 
                                 System.out.println("X thắng!");
-                            } else if (myCheck.isDraw(myStatus.statusBoard)) {
-                                Main.startGame = false;
-                                winner = 0;
-                                Winner myWinnerFrame = new Winner(0);
-                                System.out.println("Draw");
                             }
+                            //Cho phép người chơi 2 đi (Người chơi 1 đóng)
                             player = 2;
 
                             if (numberPlayer == 1) { //Chế độ mội người chơi (Chơi với máy)
@@ -163,11 +156,6 @@ public class GamePanel extends JPanel {
                                     Winner myWinnerFrame = new Winner(3);
 
                                     System.out.println("Máy thắng!");
-                                } else if (myCheck.isDraw(myStatus.statusBoard)) {
-                                    Main.startGame = false;
-                                    winner = 0;
-                                    Winner myWinnerFrame = new Winner(0);
-                                    System.out.println("Draw");
                                 }
                                 player = 1;
 
@@ -180,18 +168,12 @@ public class GamePanel extends JPanel {
                             System.out.println("Người chơi O " + row + " " + col + " " + myStatus.statusBoard[row][col]);
                             
                             //Kiểm tra nước đi thắng?
-                           
                             if (myCheck.checkIt(row, col, myStatus.statusBoard, player) == true) {
                                 Main.startGame = false;
                                 winner = 2;
                                 Winner myWinnerFrame = new Winner(2);
-                                System.out.println(" O thắng!");
+                                System.out.println("O thắng!");
 
-                            } else if (myCheck.isDraw(myStatus.statusBoard)) {
-                                Main.startGame = false;
-                                winner = 0;
-                                Winner myWinnerFrame = new Winner(0);
-                                System.out.println("Draw");
                             }
                             player = 1;
                         }
